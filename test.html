@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test — HAM RADIO TESTS</title>
+<meta name="description" content="Take a HAM Radio practice or mock test question by question, with instant feedback and explanations.">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body data-page="test">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="./index.html">
+      <span class="brand-mark" aria-hidden="true">📡</span>
+      <span>HAM RADIO TESTS<small>Amateur Radio Examination Practice</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="./index.html" data-page="home">Home</a></li>
+        <li><a href="./practice.html" data-page="practice">Practice Tests</a></li>
+        <li><a href="./mock-tests.html" data-page="mock">Mock Tests</a></li>
+        <li><a href="./instructions.html" data-page="instructions">Instructions</a></li>
+        <li><a href="./about.html" data-page="about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="test-shell">
+
+    <!-- LOADING STATE -->
+    <div class="state-panel" id="loading-panel">
+      <div class="spinner" aria-hidden="true"></div>
+      <h2>Loading Test...</h2>
+      <p>Please wait while we prepare your questions.</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="state-panel hidden" id="error-panel" role="alert">
+      <h2>Something Went Wrong</h2>
+      <p id="error-message">Unable to load this test. Please try again.</p>
+      <div class="state-actions">
+        <a class="btn btn-secondary" href="./practice.html">Back to Practice Tests</a>
+        <a class="btn btn-secondary" href="./mock-tests.html">Back to Mock Tests</a>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE (CSV parsed but contained no valid questions) -->
+    <div class="state-panel hidden" id="empty-panel">
+      <h2>No Questions Found</h2>
+      <p>No questions were found for this test.</p>
+      <div class="state-actions">
+        <a class="btn btn-secondary" id="empty-back-link" href="./practice.html">Back</a>
+      </div>
+    </div>
+
+    <!-- ============================== TEST AREA ============================== -->
+    <div id="test-area" class="hidden">
+      <div class="test-header-bar">
+        <h1 id="test-title">Test Title</h1>
+        <p class="test-sub" id="test-sub">Category</p>
+        <div class="progress-row">
+          <span id="question-label-mini">Question <span id="progress-current">1</span> of <span id="progress-total">25</span></span>
+          <span id="progress-percent">4%</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Test progress">
+          <div class="progress-fill" id="progress-fill" style="width:4%;"></div>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <div class="question-label" id="question-label">Question 1 of 25</div>
+        <h2 class="question-text" id="question-text">Question text goes here.</h2>
+
+        <form id="options-form" novalidate>
+          <div class="form-error" id="form-error" role="alert"></div>
+          <ul class="options-list" id="options-list">
+            <!-- Options rendered by test-engine.js -->
+          </ul>
+
+          <div class="feedback-panel" id="feedback-panel" hidden aria-live="polite">
+            <div class="feedback-title" id="feedback-title">Correct Answer</div>
+            <div class="feedback-block">
+              <strong>Correct Answer</strong>
+              <span id="feedback-correct-answer">B. Answer text</span>
+            </div>
+            <div class="feedback-block">
+              <strong>Explanation</strong>
+              <span id="feedback-explanation">Explanation text.</span>
+            </div>
+          </div>
+
+          <div class="test-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit Answer</button>
+            <button type="button" class="btn btn-primary hidden" id="next-btn">Next Question →</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================== RESULT AREA ============================== -->
+    <div id="result-area" class="hidden">
+      <div class="result-card">
+        <div class="result-eyebrow">Test Completed</div>
+        <div class="score-circle" id="result-circle" style="--pct:0;">
+          <span class="score-value" id="result-percent">0%</span>
+        </div>
+        <p class="mt-0" style="color:var(--gray-400); margin-bottom:18px;">Your Test Result</p>
+
+        <span class="pass-badge hidden" id="pass-badge">PASSED</span>
+
+        <div class="result-stats">
+          <div class="result-stat correct">
+            <div class="num" id="result-correct">0</div>
+            <div class="lbl">✓ Correct</div>
+          </div>
+          <div class="result-stat wrong">
+            <div class="num" id="result-wrong">0</div>
+            <div class="lbl">✗ Wrong</div>
+          </div>
+          <div class="result-stat">
+            <div class="num" id="result-total">0</div>
+            <div class="lbl">Total</div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="review-toggle-btn" type="button">Review Answers</button>
+          <button class="btn btn-secondary" id="retake-btn" type="button">Retake Test</button>
+          <a class="btn btn-secondary" href="./practice.html">Practice Tests</a>
+          <a class="btn btn-secondary" href="./mock-tests.html">Mock Tests</a>
+          <a class="btn btn-outline" href="./index.html">Home</a>
+        </div>
+      </div>
+
+      <div class="review-list hidden" id="review-list">
+        <!-- Populated by test-engine.js -->
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand" style="margin-bottom:10px;">
+          <span class="brand-mark" aria-hidden="true">📡</span>
+          <span>HAM RADIO TESTS</span>
+        </div>
+        <p>Amateur Radio Examination Practice Platform.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./practice.html">Practice Tests</a></li>
+            <li><a href="./mock-tests.html">Mock Tests</a></li>
+            <li><a href="./instructions.html">Instructions</a></li>
+            <li><a href="./about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="footer-year">2026</span> HAM RADIO TESTS. All Rights Reserved.</span>
+      <button id="reset-progress-btn" class="reset-progress-link" type="button">Reset Progress</button>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/config.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/csv-loader.js"></script>
+<script src="./js/test-engine.js"></script>
+</body>
+</html>
